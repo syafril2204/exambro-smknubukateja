@@ -40,6 +40,7 @@ dependencies:
   secure_application: ^4.1.0
   mobile_scanner: ^7.0.1
   webview_flutter: ^4.8.0 
+  firebase_crashlytics: ^5.0.1
 
 dev_dependencies:
   flutter_test:
