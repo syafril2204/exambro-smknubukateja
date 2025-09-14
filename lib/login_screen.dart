@@ -1,9 +1,10 @@
 // lib/login_screen.dart
-
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'admin_screen.dart';
 import 'student_screen.dart';
+import 'package:kiosk_mode/kiosk_mode.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -64,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         } else if (role == 'siswa') {
           // Navigasi ke Halaman Siswa, kirim username dan ID dokumen
+            await startKioskMode();
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) =>
@@ -107,7 +109,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.school, size: 80, color: Colors.white),
+                Image.asset('assets/logo_maarif_nu.png', height: 60),
+                const SizedBox(width: 20), // Spasi antar logo
+                Image.asset('assets/logo_smk.png', height: 80),
                 const SizedBox(height: 20),
                 const Text(
                   "EXAMBRO",

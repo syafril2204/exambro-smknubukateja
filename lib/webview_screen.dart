@@ -1,10 +1,10 @@
 // lib/webview_screen.dart
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart'; // <-- IMPORT BARU
 import 'package:webview_flutter/webview_flutter.dart';
 import 'login_screen.dart';
+import 'package:kiosk_mode/kiosk_mode.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String url;
@@ -21,13 +21,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   void initState() {
     super.initState();
-    // Memaksa aplikasi masuk ke mode fullscreen total
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
-    // =================== PERINTAH SPESIFIK ANTI-SCREENSHOT ===================
-    // Menambahkan pengamanan ekstra khusus untuk halaman ini
-    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-    // ======================================================================
 
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -39,8 +33,9 @@ class _WebViewScreenState extends State<WebViewScreen> {
       )
       ..loadRequest(Uri.parse(widget.url));
   }
-
-  void _logout() {
+  
+  void _logout()  async  {
+    await stopKioskMode();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -50,10 +45,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   @override
   void dispose() {
-    // Mengembalikan UI sistem ke normal
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    // Menghapus pengamanan ekstra saat halaman ditutup
-    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
     super.dispose();
   }
 

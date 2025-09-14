@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.CAMERA" />
-
+ <uses-permission android:name="android.permission.REQUEST_LOCK_TASK" />
     <application
         android:label="EXAMBRO - SMK MA'ARIF NU BUKATEJA"
         android:name="${applicationName}"

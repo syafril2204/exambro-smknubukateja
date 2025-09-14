@@ -1,10 +1,11 @@
 // lib/student_screen.dart
-
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'login_screen.dart';
 import 'webview_screen.dart';
+import 'package:kiosk_mode/kiosk_mode.dart';
 
 class StudentScreen extends StatefulWidget {
   final String username;
@@ -32,7 +33,9 @@ class _StudentScreenState extends State<StudentScreen> {
     }
   }
 
-  void _logout() {
+  void _logout() async  {
+    
+    await stopKioskMode();
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const LoginScreen()),
       (Route<dynamic> route) => false,
